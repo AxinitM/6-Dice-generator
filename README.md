@@ -15,7 +15,7 @@ After the animation, the final result of the dice roll is displayed, visually em
 
 ## Links
 
-- [6Dice](https://your-live-demo-url.com) 
+- [6Dice](https://axinitm.github.io/6-Dice-generator/) 
 
 ## Built with
 
