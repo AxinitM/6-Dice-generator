@@ -1,49 +1,34 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const diceImg = document.getElementById("dice");
-  const diceSound = document.getElementById("audioSound");
+const diceImg = document.getElementById("dice");
+const imagePath = "./images/";
+const diceFaces = 6;
+const changeInterval = 100;
+const totalDelay = 1500;
+const numberOfChanges = totalDelay / changeInterval;
+let intervalId;
+const diceSound = document.getElementById("diceSound");
 
-  const imagePath = "images/";
-  const diceFaces = 6;
-  const changeInterval = 100;  
-  let intervalId;
+diceImg.addEventListener("click", () => {
+  let changeCounter = 0;
+  clearInterval(intervalId);
+  diceImg.style.border = "";
 
-  diceImg.addEventListener("click", () => {
-    clearInterval(intervalId); 
-    diceImg.style.border = "";  
+    intervalId = setInterval(() => {
+    const tempRandomNumber = Math.floor(Math.random() * diceFaces) + 1;
+    diceImg.src = ${imagePath}dice-${tempRandomNumber}.png;
+    changeCounter++;
 
-    
-    diceSound.currentTime = 0;
-    diceSound.play().catch((e) => {
-      console.warn("Не удалось воспроизвести звук:", e);
-    });
+   
 
-    
-    const startRolling = () => {
-      const totalDelay = diceSound.duration * 1000;  
-      const numberOfChanges = Math.floor(totalDelay / changeInterval);  
-
-      let changeCounter = 0;
-
-      
-      intervalId = setInterval(() => {
-        const tempRandom = Math.floor(Math.random() * diceFaces) + 1;
-        diceImg.src = `${imagePath}dice-${tempRandom}.png`;  
-        changeCounter++;
-
-        if (changeCounter >= numberOfChanges) {
-          clearInterval(intervalId);  
-          const finalRoll = Math.floor(Math.random() * diceFaces) + 1;  
-          diceImg.src = `${imagePath}dice-${finalRoll}.png`;  
-          diceImg.style.border = "3px solid var(--resultDiceBorder)";  
-        }
-      }, changeInterval);
-    };
-
-    
-    if (diceSound.readyState >= 1) {
-      startRolling();
-    } else {
-      diceSound.onloadedmetadata = startRolling; 
+    if (changeCounter >= numberOfChanges) {
+      clearInterval(intervalId);
+      const finalRandomNumber = Math.floor(Math.random() * diceFaces) + 1;
+      diceImg.src = ${imagePath}dice-${finalRandomNumber}.png;
+      diceImg.style.border = "3px solid var(--resultDiceBorder)";
     }
-  });
+  }, changeInterval);
+  
+    diceSound.currentTime = 0;
+  diceSound.play();
+  
+
 });
